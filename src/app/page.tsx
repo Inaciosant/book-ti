@@ -1,65 +1,51 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import { useBooks } from "@/hooks/use-books";
+import { BookList } from "@/components/books/list";
+import { SearchBar } from "@/components/search/search-bar";
+import { LoadingState } from "@/components/states/loading-state";
+import { ErrorState } from "@/components/states/error-state";
+import { EmptyState } from "@/components/states/empty-state";
+import { BookItem } from "@/types/book"; // Certifique-se de importar o tipo correto
 
 export default function Home() {
+  const [query, setQuery] = useState("javascript");
+  const { data, isLoading, isError, refetch } = useBooks(query);
+
+
+  const formattedBooks: BookItem[] = data?.books?.map((book: any) => ({
+    id: book.isbn13, 
+    title: book.title,
+    subtitle: book.subtitle,
+    isbn13: book.isbn13,
+    price: book.price,
+    image: book.image,
+    url: book.url,
+    authors: "", 
+    year: "-",
+    quantity: 1 
+  })) || [];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="flex flex-col items-center justify-center min-h-screen container mx-auto">
+      <div className="w-full p-4 flex justify-center">
+        <SearchBar onSearch={(term) => setQuery(term)} />
+      </div>
+
+      <div className="w-full p-4 mt-3">
+        {isLoading ? (
+          <LoadingState />
+        ) : isError ? (
+          <ErrorState 
+            error="Ops! Ocorreu um erro ao buscar os livros." 
+            reset={refetch} 
+          />
+        ) : formattedBooks.length === 0 ? (
+          <EmptyState term={query} />
+        ) : (
+          <BookList books={formattedBooks} />
+        )}
+      </div>
     </div>
   );
 }
