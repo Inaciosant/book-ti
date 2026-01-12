@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Book TI — E-commerce de Livros Técnicos
 
-## Getting Started
+Aplicação web desenvolvida para simular um e-commerce focado em livros de tecnologia. O projeto consome a [IT Book Store API](https://api.itbook.store/) e demonstra a implementação de padrões modernos de desenvolvimento frontend, focando em performance, otimização de renderização e gerenciamento de estado complexo.
 
-First, run the development server:
+![Project Preview](.github/preview.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📋 Visão Geral
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O objetivo deste projeto foi explorar o ecossistema do **Next.js (App Router)** em conjunto com bibliotecas de gerenciamento de estado e interface de usuário. A aplicação trata desafios reais de frontend, como:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Cacheamento e revalidação de dados server-side.
+- Gerenciamento de estado global no client-side (Carrinho de compras).
+- UI/UX responsiva com feedback visual (Skeletons, Toasts).
+- Tratamento de erros e estados vazios.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+A arquitetura foi construída utilizando as seguintes tecnologias:
 
-To learn more about Next.js, take a look at the following resources:
+### Core
+- **Framework:** Next.js 14+ (App Router)
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### State Management & Data Fetching
+- **Client State:** Zustand (Persistência e manipulação do carrinho)
+- **Server State:** TanStack Query (React Query) para caching e sincronização com a API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### UI Components
+- **Library:** Shadcn UI 
+- **Ícones:** Lucide React
 
-## Deploy on Vercel
+## ✨ Funcionalidades Principais
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1.  **Catálogo de Produtos:**
+    - Listagem de livros com paginação e busca em tempo real.
+    - Implementação de *Skeleton Loading* para melhor percepção de performance (LCP).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2.  **Detalhes do Produto (Dynamic Routing):**
+    - Páginas estáticas e dinâmicas geradas com base no ISBN do livro.
+    - Carrossel de recomendações baseado em contexto.
+
+3.  **Carrinho de Compras (Side-Sheet):**
+    - Painel lateral deslizante (Drawer) acessível de qualquer rota.
+    - Persistência de dados locais.
+    - Cálculos automáticos de subtotal e formatação de moeda (BRL).
+
+4.  **Tratamento de Erros:**
+    - Componentes de *fallback* para falhas de API e resultados vazios.
+    - Sanitização de dados vindos da API (parsing de preços e strings).
+
+## Link do Projeto Deployado
+ [Book T.i](https://book-ti-delta.vercel.app/) 
