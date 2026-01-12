@@ -1,5 +1,4 @@
-"use client"; // Carrossel precisa de interatividade
-
+"use client"; 
 import { BookOpenCheck } from "lucide-react";
 import { BookCard } from "@/components/books/card";
 import { BookItem } from "@/types/book";
@@ -22,7 +21,7 @@ export const RecommendedBooks = ({ books }: RecommendedBooksProps) => {
     <div className="w-full py-8">
       <h2 className="text-2xl font-bold mb-6 flex items-center text-gray-800">
         <BookOpenCheck className="mr-2 text-green-600" />
-        Quem viu este livro, também viu
+       Livros Recomendados
       </h2>
       
       <Carousel 

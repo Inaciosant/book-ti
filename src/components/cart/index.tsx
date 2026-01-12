@@ -82,7 +82,6 @@ export const CartSheet = () => {
                     <p className="text-xs text-gray-500">ISBN: { item.id}</p>
                     <div className="flex justify-between items-center mt-2">
                         <span className="text-sm font-medium text-green-600">
-                            {/* 2. Formatando o preço individual (Usando parsePrice) */}
                             {formatCurrency(parsePrice(item.price))}
                         </span>
                         
